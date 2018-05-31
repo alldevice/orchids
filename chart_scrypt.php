@@ -89,7 +89,7 @@
 		//echo '</pre>';
 		//$doc->payload->d->TimeStamp_0 = (int)$t;
 	}
-
+	
 	// SORTING
 	foreach($fields_2->docs as $key => $row)
 	{
@@ -97,6 +97,10 @@
 	}
 	array_multisort($vc_array_name_2, SORT_ASC, $fields_2->docs);
 	//------------------------------
+	//echo '<pre>';
+	//print_r($fields_2);
+	//echo '</pre>';
+	
 ?>
 
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
