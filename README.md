@@ -17,3 +17,4 @@ crontab -r
 
 ## Delete job for specific user. Must be run as root user ##
 crontab -r -u username
+https://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/
