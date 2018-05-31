@@ -84,6 +84,7 @@
 		//echo '<pre>';
         $t = strtotime($doc->payload->d->TimeStamp);
         $doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
+        //echo $doc->payload->d->TimeStamp;
         //echo $doc->payload->d->TimeStamp_1;
 		//echo '</pre>';
 		//$doc->payload->d->TimeStamp_0 = (int)$t;
