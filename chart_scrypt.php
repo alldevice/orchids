@@ -1,4 +1,4 @@
-	<?php 
+<?php 
 	$current_user = wp_get_current_user();
 	if ($current_user->user_login == NULL)
 	{
@@ -96,7 +96,7 @@
 	}
 	array_multisort($vc_array_name, SORT_ASC, $fields_2->docs);
 	//------------------------------
-	?>
+?>
 
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -156,10 +156,65 @@
     }
     </script>	
 	
-
 	Temperature sensor:
 	<div id="chart_div_temp"></div>
 	<br />
 	<br />
 	Humidity sensor:
 	<div id="chart_div_hum"></div>
+	
+<?php	
+		//retreive data photo from db nosql cloudant
+	$query_hum = array(
+					'selector' => array(
+						'payload' => array(
+							'd' => array(
+								'type' => "camera_pic"
+							)
+						)
+					)
+				);
+	$query_hum_string = json_encode($query_hum);
+	$ch = curl_init();  
+	curl_setopt($ch,CURLOPT_URL,$url);
+	curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");       
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                  
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $query_hum_string); 
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-type: application/json',
+			'Accept: */*'
+		));
+	$output=curl_exec($ch);
+	curl_close($ch);
+	//------------------------------------------------
+	
+	$dir_img = "http://santisoft.ru/wp-content/orchids/photo_db_1/";
+	//$file_img = '2018-05-31--03:20:57';
+	//echo '<img src="'.$dir_img.'/'.$file_img.'.jpg" />';
+	
+	$fields_3 = json_decode($output);
+	foreach($fields_3->docs as $doc)
+	{
+        $t = strtotime($doc->payload->d->TimeStamp);
+        $doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
+		//$doc->payload->d->TimeStamp_0 = (int)$t;
+	}
+
+	// SORTING
+	foreach($fields_3->docs as $key => $row)
+	{
+	  $vc_array_name[$key] = $row->payload->d->TimeStamp_1;
+	}
+	array_multisort($vc_array_name, SORT_ASC, $fields_3->docs);
+	//------------------------------
+	foreach($fields_3->docs as $doc)
+	{
+		echo '<pre>';
+		$file_img = $doc->payload->d->filename;
+		echo '<img src="'.$dir_img.'/'.$file_img.'.jpg" />';
+		echo '<br />';
+        echo $doc->payload->d->filename;
+		echo '</pre>';		
+	}
+?>
