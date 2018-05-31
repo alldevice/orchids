@@ -5,7 +5,7 @@ OUT_IP_1=google.com
 x=`ping -c1 $OUT_IP_1 2>&1 | grep -e unknown -e Unreachable -e '0 received'`
 if [ ! "$x" = "" ]; then
         echo "It's down!! Attempting to restart."
-        service networking restart
+        sudo service networking restart
         echo "network restarted $(date)" >> /home/pi/log_restart_network.log
 fi
 
