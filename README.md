@@ -6,7 +6,7 @@ Sudo service networking restart when WiFi connection is lost:
   - curl https://raw.githubusercontent.com/alldevice/orchids/master/check_network.sh > /home/pi/check_network.sh | sudo mv /home/pi/check_network.sh /usr/local/bin 
   - sudo crontab -e
   - Append the following entry: */3 * * * * /usr/local/bin/check_network.sh
- (at every minute)
+ (at every 3 minute)
  Task: List all your cron jobs:
 # crontab -l
 # crontab -u username -l
