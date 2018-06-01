@@ -37,12 +37,9 @@
 	$fields_1 = json_decode($output);
 	foreach($fields_1->docs as $doc)
 	{
-		//echo '<pre>';
-        $t = strtotime($doc->payload->d->TimeStamp);
-        $doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
-        //echo $doc->payload->d->TimeStamp_1;
-		//echo '</pre>';
-		//$doc->payload->d->TimeStamp_0 = (int)$t;
+		$t = strtotime($doc->payload->d->TimeStamp);
+        //$doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
+        $doc->payload->d->TimeStamp_1 = date('c', $t);
 	}
 
 	// SORTING
@@ -51,6 +48,19 @@
 	  $vc_array_name_1[$key] = $row->payload->d->TimeStamp_1;
 	}
 	array_multisort($vc_array_name_1, SORT_ASC, $fields_1->docs);
+
+
+	//===debug==
+	//foreach($fields_1->docs as $doc)
+	//{
+	//	echo '<pre>';
+    //    echo $doc->payload->d->TimeStamp_1;
+    //    echo $doc->payload->d->value;
+	//	echo '</pre>';
+	//}	
+	//===debug==
+
+
 	//------------------------------
 
 	//retreive data HUMIDITY from db nosql cloudant
@@ -83,11 +93,8 @@
 	{
 		//echo '<pre>';
         $t = strtotime($doc->payload->d->TimeStamp);
-        $doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
-        //echo $doc->payload->d->TimeStamp;
-        //echo $doc->payload->d->TimeStamp_1;
-		//echo '</pre>';
-		//$doc->payload->d->TimeStamp_0 = (int)$t;
+        //$doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
+        $doc->payload->d->TimeStamp_1 = date('c', $t);
 	}
 	
 	// SORTING
@@ -97,9 +104,6 @@
 	}
 	array_multisort($vc_array_name_2, SORT_ASC, $fields_2->docs);
 	//------------------------------
-	//echo '<pre>';
-	//print_r($fields_2);
-	//echo '</pre>';
 	
 ?>
 
@@ -116,7 +120,7 @@
             <?php
 			foreach($fields_1->docs as $doc)
 			{
-				echo "[new Date(".$doc->payload->d->TimeStamp_1."),".$doc->payload->d->value."],";
+				echo "[new Date('".$doc->payload->d->TimeStamp_1."'),".$doc->payload->d->value."],";
 			}
 			?>
       ]);
@@ -144,7 +148,7 @@
             <?php
 			foreach($fields_2->docs as $doc)
 			{
-				echo "[new Date(".$doc->payload->d->TimeStamp_1."),".$doc->payload->d->value."],";
+				echo "[new Date('".$doc->payload->d->TimeStamp_1."'),".$doc->payload->d->value."],";
 			}
 			?>
       ]);
@@ -202,8 +206,8 @@
 	foreach($fields_3->docs as $doc)
 	{
         $t = strtotime($doc->payload->d->TimeStamp);
-        $doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
-		//$doc->payload->d->TimeStamp_0 = (int)$t;
+        //$doc->payload->d->TimeStamp_1 = date('Y,m,d,H,i,s', strtotime("-1 month", $t));
+		$doc->payload->d->TimeStamp_1 = date('c', $t);
 	}
 
 	// SORTING
@@ -213,15 +217,6 @@
 	}
 	array_multisort($vc_array_name_3, SORT_ASC, $fields_3->docs);
 	//------------------------------
-	foreach($fields_3->docs as $doc)
-	{
-		//echo '<pre>';
-		//$file_img = $doc->payload->d->filename;
-		//echo '<img src="'.$dir_img.'/'.$file_img.'.jpg" />';
-		//echo '<br />';
-        //echo $doc->payload->d->filename;
-		//echo '</pre>';		
-	}
 ?>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -244,8 +239,11 @@
       </ul>
     </div>
 
-
   <style>
+.callbacks_nav.next
+  {
+  	margin-left: 20px;
+  }
 .rslides {
   position: relative;
   list-style: none;
