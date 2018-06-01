@@ -32,11 +32,11 @@ def main(argv):
       elif opt in ("-p", "--pwm_pin"):
          pwm_pin = int(arg)
 
-   step_num = 500 # число шагов
+   step_num = 500 # number of steps
 		 
-   # считываем направление подвчи тока 
+   # to define direction electricity current 
    dir = open("/home/pi/orchids/sense.fl", "r")
-   di = dir.readlines() # массив строк файла rasp.fl
+   di = dir.readlines() # array string from file rasp.fl
    direct = int(di[0])
    dir.close()		 
  
