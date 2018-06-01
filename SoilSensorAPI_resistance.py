@@ -14,7 +14,7 @@ import sys, getopt
 pi = pigpio.pi('localhost', 4444) # connect to local Pi
 #p_range = range(0, 10000, 1)
 
-
+#example cmd: SoilSensorAPI_resistance.py -s 17 -p  18
 def main(argv):
    sense_pin = ''
    pwm_pin = ''
