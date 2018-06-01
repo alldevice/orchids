@@ -215,11 +215,87 @@
 	//------------------------------
 	foreach($fields_3->docs as $doc)
 	{
-		echo '<pre>';
-		$file_img = $doc->payload->d->filename;
-		echo '<img src="'.$dir_img.'/'.$file_img.'.jpg" />';
-		echo '<br />';
-        echo $doc->payload->d->filename;
-		echo '</pre>';		
+		//echo '<pre>';
+		//$file_img = $doc->payload->d->filename;
+		//echo '<img src="'.$dir_img.'/'.$file_img.'.jpg" />';
+		//echo '<br />';
+        //echo $doc->payload->d->filename;
+		//echo '</pre>';		
 	}
 ?>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://santisoft.ru/wp-includes/js/responsiveslides.min.js"></script>
+
+
+    <!-- Slideshow 4 -->
+    <div class="callbacks_container">
+      <ul class="rslides" id="slider4">
+		<?php
+			foreach($fields_3->docs as $doc)
+			{
+				echo '<li>';
+				$file_img = $doc->payload->d->filename;
+				echo '<img src="'.$dir_img.'/'.$file_img.'.jpg" alt="'.$file_img.'" width="250" />';
+				echo '<p class="caption">'.$file_img.'</p>';
+				echo '</li>';
+			}
+		?>
+      </ul>
+    </div>
+
+
+  <style>
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 250;
+  border: 0;
+  }
+  </style>
+
+<script>
+  $(function() {
+      $("#slider4").responsiveSlides({
+        auto: false,
+        pager: false,
+        nav: true,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>");
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>");
+        }
+      });
+  });
+</script>
+
+
+	
