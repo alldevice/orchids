@@ -215,7 +215,7 @@
 	{
 	  $vc_array_name_3[$key] = $row->payload->d->TimeStamp_1;
 	}
-	array_multisort($vc_array_name_3, SORT_ASC, $fields_3->docs);
+	array_multisort($vc_array_name_3, SORT_DESC, $fields_3->docs);
 	//------------------------------
 ?>
 
