@@ -7,8 +7,8 @@ Shape Version=11.00
 Screen=1536,864
 MCAPVersion=11.0.1.9
 Key ID=0
-NLCnt=12
-TXCnt=5
+NLCnt=34
+TXCnt=9
 
 [shapedef]
 Name=Capacitor
@@ -42,7 +42,7 @@ Name=Resistor
 Definition=Resistor
 Shape=Resistor_Euro
 Mask=7681
-Used=1879
+Used=1886
 memo=Resistor
 Label Offset=11,-36,10,10
 PinCnt=2
@@ -54,7 +54,7 @@ Name=Capacitor
 Definition=Capacitor
 Shape=Capacitor
 Mask=7425
-Used=1013
+Used=1016
 memo=Capacitor
 Label Offset=4,-38,12,12
 PinCnt=2
@@ -66,7 +66,7 @@ Name=Ground
 Definition=Ground
 Shape=Ground
 Mask=257
-Used=746
+Used=753
 memo=Ground
 Label Offset=0,0,0,0
 PinCnt=1
@@ -114,11 +114,10 @@ Rot=6
 [Attr]
 ON=-31,-21,PART
 V=R1
-Style=8192
 
 [Attr]
-ON=0,0,RESISTANCE
-V
+ON=-38,-19,RESISTANCE
+V=Rsoil
 Style=8192
 
 [Attr]
@@ -172,6 +171,197 @@ Pxs=368,304,368,320
 [Wire]
 Pxs=344,304,368,304
 
+[Object]
+Object=Rectangle
+CBorder=#000080
+Px=589,149,655,299
+
+[Comp]
+Name=Resistor
+Px=808,184
+Rot=1
+
+[Attr]
+ON=10,10,PART
+V=R3
+
+[Attr]
+ON=7,13,RESISTANCE
+V=Rsoil
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Capacitor
+Px=752,312
+Rot=5
+
+[Attr]
+ON=10,-43,PART
+V=C3
+Style=8192
+
+[Attr]
+ON=12,-24,CAPACITANCE
+V=1u
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Ground
+Px=752,312
+Rot=1
+
+[Comp]
+Name=Resistor
+Px=704,264
+Rot=1
+
+[Attr]
+ON=10,10,PART
+V=R1
+Style=8192
+
+[Attr]
+ON=10,24,RESISTANCE
+V=10k
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Ground
+Px=704,312
+Rot=1
+
+[Comp]
+Name=Resistor
+Px=704,264
+Rot=6
+
+[Attr]
+ON=-39,-21,PART
+V=R5
+Style=8192
+
+[Attr]
+ON=-15,-20,RESISTANCE
+V=1k
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=704,264,752,264
+
+[Comp]
+Name=Capacitor
+Px=752,208
+Rot=5
+
+[Attr]
+ON=10,-43,PART
+V=C4
+Style=8192
+
+[Attr]
+ON=12,-24,CAPACITANCE
+V=1u
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Ground
+Px=752,208
+Rot=1
+
+[Comp]
+Name=Resistor
+Px=704,160
+Rot=1
+
+[Attr]
+ON=10,10,PART
+V=R6
+Style=8192
+
+[Attr]
+ON=10,24,RESISTANCE
+V=10k
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Ground
+Px=704,208
+Rot=1
+
+[Comp]
+Name=Resistor
+Px=704,160
+Rot=6
+
+[Attr]
+ON=-39,-21,PART
+V=R7
+Style=8192
+
+[Attr]
+ON=-15,-20,RESISTANCE
+V=1k
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=704,160,752,160
+
+[Wire]
+Pxs=752,160,808,160
+
+[Wire]
+Pxs=808,160,808,184
+
+[Wire]
+Pxs=752,264,808,264
+
+[Wire]
+Pxs=808,232,808,264
+
+[Comp]
+Name=Ground
+Px=672,312
+Rot=1
+
+[Wire]
+Pxs=672,288,672,312
+
+[Wire]
+Pxs=656,288,672,288
+
+[Object]
+Object=Ellipse
+CBorder=#000080
+Px=792,181,846,235
+
 [Grid Text]
 Text="Raspberry Pi"
 Px=272,184
@@ -207,6 +397,38 @@ CBorder=None
 [Grid Text]
 Text="Sensor"
 Px=384,232
+GridSnap=True
+JustifyH=Left
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="Raspberry Pi"
+Px=584,144
+GridSnap=True
+JustifyH=Left
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="GPIO_y"
+Px=608,264
+GridSnap=True
+JustifyH=Left
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="GPIO_x"
+Px=608,168
+GridSnap=True
+JustifyH=Left
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="GND"
+Px=624,288
 GridSnap=True
 JustifyH=Left
 JustifyV=Bottom
@@ -366,9 +588,9 @@ PrinterScale=1
 Scale 0=1
 Scale 1=1
 Scale 2=1
-SB 3=155,96
+SB 3=409,86
 Scale 3=0.5
-Px=537,311
+Px=958,198
 WinBackGround Color=#FFFFFF
 Select Color=#FF0000
 Anchor Color=#000000
