@@ -10,8 +10,8 @@
 	
 <?php	
 	//retreive data photo from db nosql cloudant
-	$login = '358bc398-e503-48e4-a80a-bb3975c68ea4-bluemix';
-	$password = 'eab71e7aacba4b8344ecd92707cbbaf969a3193269a5a2aff063e3b99a468fc7';
+	$login = 'aundlessuguiersuseversel'; //sense_1(API_KEY)
+	$password = 'b579cdf4d322468db3b99272c0277124221eec14';
 	$url = 'https://358bc398-e503-48e4-a80a-bb3975c68ea4-bluemix.cloudant.com/sense_1/_find';
 	$query_hum = array(
 					'selector' => array(
