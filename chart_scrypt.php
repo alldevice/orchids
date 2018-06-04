@@ -374,10 +374,10 @@
 	
 	<br />
 	<br />	
-	Temperature sensor:
+	Temperature from sensor near plants and data from meteostation:
 	<div id="chart_div_temp"></div>
 	<br />
 	<br />
-	Humidity sensor:
+	Humidity from sensor near plants and data from meteostation:
 	<div id="chart_div_hum"></div>
 	
