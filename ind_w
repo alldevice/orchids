@@ -1,0 +1,8 @@
+function (doc) {
+if (doc.payload.type) {
+index("type_w", doc.payload.type, {"store": true});
+}
+if (doc.payload.unixtime) {
+index("unixtime_w", doc.payload.unixtime, {"store": true});
+}
+}
