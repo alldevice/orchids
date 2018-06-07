@@ -1,0 +1,13 @@
+function (doc) {
+if (doc.payload.d.type) {
+index("type", doc.payload.d.type, {"store": true});
+}
+//index("time", doc.payload.d.TimeStamp, {"store": true});
+//index("time", new Date(doc.payload.d.TimeStamp).getTime()/1000, {"store": true});
+if (doc.payload.d.unixtime) {
+index("unixtime", doc.payload.d.unixtime, {"store": true}); // it work
+}
+if (doc.payload.d.value) {
+index("value", doc.payload.d.value, {"store": true});
+}
+}
