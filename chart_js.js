@@ -10,11 +10,96 @@
 	
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="http://santisoft.ru/wp-includes/js/responsiveslides.min.js"></script>
+
+
+
+
+<!-- Slideshow 4 -->
+<div class="callbacks_container" style = "float: right">
+	<ul class="rslides" id="slider4">
+		<li>
+			<p class="caption"></p>
+			<img src="http://santisoft.ru/wp-content/orchids/photo_db_1/2018-06-01-09:20:59.jpg" alt="2018-06-01-09:20:59" width="250" />
+		</li>
+		<li>
+			<p class="caption"></p>
+			<img src="http://santisoft.ru/wp-content/orchids/photo_db_1/2018-06-02-13:43:53.jpg" alt="2018-06-02-13:43:53" width="250" />
+		</li>		
+	</ul>
+</div>
+<div style = "clear: both">
+</div>
+
+
+
+
+<style>
+.callbacks_nav.next
+  {
+  	margin-left: 20px;
+  }
+  
+.rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+  
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+  
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+  
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 250;
+  border: 0;
+  }
+</style>
+
 
 <script>
+  $(function() {
+      $("#slider4").responsiveSlides({
+        auto: false,
+        pager: false,
+        nav: true,
+        speed: 500,
+        namespace: "callbacks",
+        before: function () {
+          $('.events').append("<li>before event fired.</li>"); 
+        },
+        after: function () {
+          $('.events').append("<li>after event fired.</li>"); /* */
+        }
+      });
+  });
+</script>
 
 
 
+
+
+
+
+<script>
+//charts
 
 var tp_back_max = 80000; // seconds
 google.charts.load('current', {'packages':['corechart', 'line']});
@@ -59,11 +144,7 @@ $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back,
 	};
 	drawChart2(elem);
 });	
-
 });
-//while (stat1 != "success"){}
-//sleep(2);
-	
 }
 
 
@@ -121,8 +202,6 @@ function drawChart3(elem) {
 	linearChart.draw(data, linearOptions);
 }
 
-
-
 </script>	
 	
 
@@ -165,21 +244,6 @@ $( ".period" ).click(function () {
     }
 load_page_data(tp_back);
 });
-		
 
 
-
-
-
-//
-function sleep(seconds){
-    var waitUntil = new Date().getTime() + seconds*1000;
-    while(new Date().getTime() < waitUntil) true;
-}
-
-
-
-//load_page_data(tp_back);
 </script>
-
-<p id="demo"></p>
