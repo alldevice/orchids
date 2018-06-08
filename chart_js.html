@@ -7,101 +7,93 @@
 	echo 'Current user: ' . $current_user->user_login . '<br />'; 
 	echo '<br />';
 ?>	
-	
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="http://santisoft.ru/wp-includes/js/responsiveslides.min.js"></script>
 
 
 
 
-<!-- Slideshow 4 -->
-<div class="callbacks_container" style = "float: right">
-	<ul class="rslides" id="slider4">
-		<li>
-			<p class="caption"></p>
-			<img src="http://santisoft.ru/wp-content/orchids/photo_db_1/2018-06-01-09:20:59.jpg" alt="2018-06-01-09:20:59" width="250" />
-		</li>
-		<li>
-			<p class="caption"></p>
-			<img src="http://santisoft.ru/wp-content/orchids/photo_db_1/2018-06-02-13:43:53.jpg" alt="2018-06-02-13:43:53" width="250" />
-		</li>		
-	</ul>
+<!-- Slideshow -->
+<div class="w3-content w3-display-container" style="max-width:300px ; float: right"  id="slider1" >
+<button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+<button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
 </div>
+
+
+
+
 <div style = "clear: both">
 </div>
 
 
+	<br />
+	<br />	
+	Temperature from sensor near plants and data from meteostation:
+	<div id="chart_div_temp"></div>
+	<br />
+	<br />
+	Humidity from sensor near plants and data from meteostation:
+	<div id="chart_div_hum"></div>
+	<br />
+	<br />
+	Pressure from meteostation:
+	<div id="chart_div_pre"></div>
+	
+
+	<div id="update-nav">
+		<div id="range-selector">
+			<input type="button" id="3_days" class="period ui-button" value="3_days"/>
+			<input type="button" id="1_week" class="period ui-button" value="1_week"/>
+			<input type="button" id="all" class="period ui-button" value="all"/>
+		</div>
+	</div>
 
 
-<style>
-.callbacks_nav.next
-  {
-  	margin-left: 20px;
-  }
-  
-.rslides {
-  position: relative;
-  list-style: none;
-  overflow: hidden;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  }
-  
-.rslides li {
-  -webkit-backface-visibility: hidden;
-  position: absolute;
-  display: none;
-  width: 100%;
-  left: 0;
-  top: 0;
-  }
-  
-.rslides li:first-child {
-  position: relative;
-  display: block;
-  float: left;
-  }
-  
-.rslides img {
-  display: block;
-  height: auto;
-  float: left;
-  width: 250;
-  border: 0;
-  }
-</style>
 
 
 <script>
-  $(function() {
-      $("#slider4").responsiveSlides({
-        auto: false,
-        pager: false,
-        nav: true,
-        speed: 500,
-        namespace: "callbacks",
-        before: function () {
-          $('.events').append("<li>before event fired.</li>"); 
-        },
-        after: function () {
-          $('.events').append("<li>after event fired.</li>"); /* */
-        }
-      });
-  });
+//	Slideshow
+var slideIndex = 1;
+var files_name = [];
+var time_snap = [];
+var dest = "camera_pic";
+$.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+10000000, function( obj ) {
+	for (i = 0; i < obj.length; i++) {
+		files_name[i] = obj[i].filename;
+		time_snap[i] = obj[i].TimeStamp;
+		console.log( "Data length 2: " + obj[i] );
+	};
+for (i = 0; i < files_name.length; i++) {
+var html_to_insert = '<div class="w3-display-container mySlides"><img src="http://alldevice.online/wp-content/orchids/photo_db_1/'+files_name[i]+'.jpg" style="width:100%"><div class="w3-display-topleft w3-container w3-padding-10 w3-red">'+time_snap[i]+'</div></div>';
+document.getElementById('slider1').insertAdjacentHTML('afterbegin', html_to_insert);
+}
+showDivs(slideIndex);
+});	
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block"; 
+}
+
 </script>
-
-
-
-
-
-
 
 <script>
 //charts
 
-var tp_back_max = 80000; // seconds
+//var tp_back_max = 80000; // seconds
+var time_0 = new Date().getTime() - new Date('2018-06-07T00:00:00.000Z').getTime();
+var tp_back_max = time_0/1000; // seconds
 google.charts.load('current', {'packages':['corechart', 'line']});
 google.charts.setOnLoadCallback(load_page_data(tp_back_max));
 
@@ -147,12 +139,11 @@ $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back,
 });
 }
 
-
 function drawChart1(elem) {
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
-	data.addColumn('number', 'temperature');
-	data.addColumn('number', 'temperature');
+	data.addColumn('number', 'Outdoor temperature');
+	data.addColumn('number', 'Indoor temperature');
 	data.addRows( elem );
 	var linearOptions = {
 		hAxis: {
@@ -160,7 +151,8 @@ function drawChart1(elem) {
 		},
         vAxis: {
 			title: 'temperature, C'
-        }
+        },
+		curveType: 'function'
 	};
 	var linearChart = new google.visualization.LineChart(document.getElementById('chart_div_temp'));
 	linearChart.draw(data, linearOptions);
@@ -169,7 +161,7 @@ function drawChart1(elem) {
 function drawChart2(elem) {
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Date');
-	data.addColumn('number', 'Outdoot_Humidity');
+	data.addColumn('number', 'Outdoot Humidity');
 	data.addColumn('number', 'Moisture');
 	data.addRows( elem );
 	var linearOptions = {
@@ -178,7 +170,8 @@ function drawChart2(elem) {
 		},
         vAxis: {
 			title: 'Humidity, %'
-        }
+        },
+		curveType: 'function'
 	};
 	var linearChart = new google.visualization.LineChart(document.getElementById('chart_div_hum'));
 	linearChart.draw(data, linearOptions);
@@ -196,40 +189,17 @@ function drawChart3(elem) {
 		},
         vAxis: {
 			title: 'Pressure, mb'
-        }
+        },
+		curveType: 'function'
 	};
 	var linearChart = new google.visualization.LineChart(document.getElementById('chart_div_pre'));
 	linearChart.draw(data, linearOptions);
 }
 
 </script>	
-	
 
-
-	<br />
-	<br />	
-	Temperature from sensor near plants and data from meteostation:
-	<div id="chart_div_temp"></div>
-	<br />
-	<br />
-	Humidity from sensor near plants and data from meteostation:
-	<div id="chart_div_hum"></div>
-	<br />
-	<br />
-	Pressure from meteostation:
-	<div id="chart_div_pre"></div>
-	
-
-	<div id="update-nav">
-		<div id="range-selector">
-			<input type="button" id="3_days" class="period ui-button" value="3_days"/>
-			<input type="button" id="1_week" class="period ui-button" value="1_week"/>
-			<input type="button" id="all" class="period ui-button" value="all"/>
-		</div>
-	</div>
-
-	
 <script>
+// select time periods
 $( ".period" ).click(function () {
 	var period = this.id;
     switch(period) {
@@ -244,6 +214,9 @@ $( ".period" ).click(function () {
     }
 load_page_data(tp_back);
 });
-
-
 </script>
+
+
+
+
+	
