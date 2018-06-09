@@ -1,3 +1,10 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div style="width:100% ; float: left">
+<!-- Collage -->
+<div style="max-width:45%; float: left"  id="null_" >
 <?php 
 	$current_user = wp_get_current_user();
 	if ($current_user->user_login == NULL)
@@ -6,52 +13,42 @@
 	}
 	echo 'Current user: ' . $current_user->user_login . '<br />'; 
 	echo '<br />';
-?>	
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-
-
-
+?>
+<p>*In the future, the control panel will be located here.</p>
+<img src="http://alldevice.online/wp-content/uploads/2018/05/collage_1_1.jpg">
+</div>	
 <!-- Slideshow -->
-<div class="w3-content w3-display-container" style="max-width:300px ; float: right"  id="slider1" >
+<div class="w3-content w3-display-container" style="max-width:45% ; float: right; margin-left: 10px	"  id="slider1" >
 <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
 <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
 </div>
-
+</div>
 
 
 
 <div style = "clear: both">
 </div>
-
-
-	<br />
-	<br />	
-	Temperature from sensor near plants and data from meteostation:
-	<div id="chart_div_temp"></div>
-	<br />
-	<br />
-	Humidity from sensor near plants and data from meteostation:
-	<div id="chart_div_hum"></div>
-	<br />
-	<br />
-	Pressure from meteostation:
-	<div id="chart_div_pre"></div>
-	
-
+<br />
+<br />	
 	<div id="update-nav">
 		<div id="range-selector">
-			<input type="button" id="3_days" class="period ui-button" value="3_days"/>
-			<input type="button" id="1_week" class="period ui-button" value="1_week"/>
+			<input type="button" id="1_day" class="period ui-button" value="1_day"/>
+			<input type="button" id="2_days" class="period ui-button" value="2_days"/>
 			<input type="button" id="all" class="period ui-button" value="all"/>
 		</div>
 	</div>
-
-
-
-
+<br />	
+	Temperature from sensor near plants and weather <a href="https://www.accuweather.com/en/ru/moscow/294021/weather-forecast/294021" title="AccuWeather">data from meteostation</a>:
+	<div id="chart_div_temp"></div>
+	<br />
+	<br />
+	Moisture of soil from sensor near plants and weather <a href="https://www.accuweather.com/en/ru/moscow/294021/weather-forecast/294021" title="AccuWeather">data from meteostation</a>:
+	<div id="chart_div_hum"></div>
+	<br />
+	<br />
+	Data of pressure <a href="https://www.accuweather.com/en/ru/moscow/294021/weather-forecast/294021" title="AccuWeather">from meteostation</a>:
+	<div id="chart_div_pre"></div>
+	
 <script>
 //	Slideshow
 var slideIndex = 1;
@@ -203,11 +200,11 @@ function drawChart3(elem) {
 $( ".period" ).click(function () {
 	var period = this.id;
     switch(period) {
-      case "3_days":
-		tp_back = 4000;
+      case "1_day":
+		tp_back = 86400;
         break;
-      case "1_week":
-		tp_back = 30000;
+      case "2_days":
+		tp_back = 172800;
         break;
       default:
         tp_back = tp_back_max;
