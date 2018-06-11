@@ -59,7 +59,7 @@ $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+10000000
 	for (i = 0; i < obj.length; i++) {
 		files_name[i] = obj[i].filename;
 		time_snap[i] = obj[i].TimeStamp;
-		console.log( "Data length 2: " + obj[i] );
+		//console.log( "Data length 2: " + obj[i] );
 	};
 for (i = 0; i < files_name.length; i++) {
 var html_to_insert = '<div class="w3-display-container mySlides"><img src="http://alldevice.online/wp-content/orchids/photo_db_1/'+files_name[i]+'.jpg" style="width:100%"><div class="w3-display-topleft w3-container w3-padding-10 w3-red">'+time_snap[i]+'</div></div>';
@@ -88,27 +88,30 @@ function showDivs(n) {
 <script>
 //charts
 
-var tp_back_max = 300000; // seconds
+var tp_back_begin = 259200; // seconds 259200 = 3 days
 //var time_0 = new Date().getTime() - new Date('2018-06-07T00:00:00.000Z').getTime();
-//var tp_back_max = time_0/1000; // seconds
 google.charts.load('current', {'packages':['corechart', 'line']});
-google.charts.setOnLoadCallback(load_page_data(tp_back_max));
+google.charts.setOnLoadCallback(load_page_data(tp_back_begin));
 
 
 function load_page_data(tp_back) {
 var elem = [];
 var obj_w = {};
-var stat1;
+var decim;
 
 // meteo data
 var dest = "weather";
 $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back, function( obj ) {
 	obj_w = obj;
-	for (i = 0; i < obj.length; i++) {
-		elem[i] = [ new Date(obj[i].unixtime*1000) , obj_w[i].pressure ]
+	decim = Math.round((obj.length/200)-0.5) + 1; //decimation 
+	console.log( "Data length 1: " + decim );
+	obj_len_dec = obj.length/decim;
+	console.log( "Data length 2: " + obj_len_dec );
+	console.log( "Data length 4: " + (obj.length) );
+	for (i = 0; i < (obj_len_dec); i++) {
+		elem[i] = [ new Date(obj[i*decim].unixtime*1000) , obj_w[i*decim].pressure ]
 		//console.log( "Data length 2: " + obj_w[i] );
 	};
-
 	// third chart
 	drawChart3(elem);
 	
@@ -116,8 +119,8 @@ $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back,
 elem = [];
 var dest = "temperature_sensor_001";
 $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back, function( obj ) {
-	for (i = 0; i < obj.length; i++) {
-		elem[i] = [ new Date(obj[i].unixtime*1000) , obj_w[i].temperature , obj[i].value ]
+	for (i = 0; i < (obj_len_dec); i++) {
+		elem[i] = [ new Date(obj[i*decim].unixtime*1000) , obj_w[i*decim].temperature , obj[i*decim].value ]
 		//console.log( "Data length 2: " + obj_w[i] );
 	};
 	drawChart1(elem);
@@ -127,8 +130,8 @@ $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back,
 var dest = "humidity_sensor_001";
 elem = [];
 $.get( "https://orchids-3.mybluemix.net/sense_2?dest="+dest+"&tp_back="+tp_back, function( obj ) {
-	for (i = 0; i < obj.length; i++) {
-		elem[i] = [ new Date(obj[i].unixtime*1000) , obj_w[i].relativeHumidity , obj[i].value/5 ]  // divide on 5 for norming
+	for (i = 0; i < (obj_len_dec); i++) {
+		elem[i] = [ new Date(obj[i*decim].unixtime*1000) , obj_w[i*decim].relativeHumidity , obj[i*decim].value/5 ]  // divide on 5 for norming
 		//console.log( "Data length 2: " + obj_w[i] );
 	};
 	drawChart2(elem);
@@ -206,8 +209,11 @@ $( ".period" ).click(function () {
       case "3_days":
 		tp_back = 259200;
         break;
+	  case "all":
+		tp_back = (new Date().getTime() - new Date('2018-06-07T00:00:00.000Z').getTime())/1000; // seconds;
+        break;
       default:
-        tp_back = tp_back_max;
+        tp_back = tp_back_begin;
     }
 load_page_data(tp_back);
 });
