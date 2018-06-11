@@ -33,7 +33,7 @@
 	<div id="update-nav">
 		<div id="range-selector">
 			<input type="button" id="1_day" class="period ui-button" value="1_day"/>
-			<input type="button" id="2_days" class="period ui-button" value="2_days"/>
+			<input type="button" id="3_days" class="period ui-button" value="3_days"/>
 			<input type="button" id="all" class="period ui-button" value="all"/>
 		</div>
 	</div>
@@ -88,9 +88,9 @@ function showDivs(n) {
 <script>
 //charts
 
-//var tp_back_max = 80000; // seconds
-var time_0 = new Date().getTime() - new Date('2018-06-07T00:00:00.000Z').getTime();
-var tp_back_max = time_0/1000; // seconds
+var tp_back_max = 300000; // seconds
+//var time_0 = new Date().getTime() - new Date('2018-06-07T00:00:00.000Z').getTime();
+//var tp_back_max = time_0/1000; // seconds
 google.charts.load('current', {'packages':['corechart', 'line']});
 google.charts.setOnLoadCallback(load_page_data(tp_back_max));
 
@@ -203,8 +203,8 @@ $( ".period" ).click(function () {
       case "1_day":
 		tp_back = 86400;
         break;
-      case "2_days":
-		tp_back = 172800;
+      case "3_days":
+		tp_back = 259200;
         break;
       default:
         tp_back = tp_back_max;
