@@ -15,7 +15,6 @@ greenUpper = (80, 255, 100)
 #read list files in dir
 list = glob.glob("/mnt/hgfs/D/YandexDisk/work/iot/soft/opencv/photo_db_1/*.jpg")
 print(len(list))
-#print(list[0])
 
 for filename in list:
     #print(filename)
