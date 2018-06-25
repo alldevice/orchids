@@ -13,3 +13,4 @@ Destination files:
 - node-RED_ibm -> script for NODE-RED on IBM Bluemix Cloud
 - node-RED_raspberry -> script for NODE-RED on raspberry Pi
 - Pump_level_sensor_API.py -> script for pump
+- define_diff_color_v1.py -> Computer vision experiments with OpenCV
