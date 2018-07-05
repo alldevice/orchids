@@ -9,11 +9,13 @@ from hcsr04sensor import sensor
 import time
 import sys, getopt
 
+now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 #The normal way to start pigpio is as a daemon (during system start):
 #in rc.local put "sudo pigpiod" 
 
 pi = pigpio.pi('localhost', 4444) # connect to local Pi
-step_num = 1000 # number step
+step_num = 400 # number step
 
 
 def get_raw_distace(value):
@@ -60,6 +62,9 @@ def main(argv):
    pi.set_PWM_range(pump_pin, 100)
    pi.set_PWM_frequency(pump_pin, 1000)
 
+   
+   log = open("/home/pi/orchids/pump.log", "a+")
+   
    # check depth
    value = sensor.Measurement(trig_pin,echo_pin,temperature=20,unit='metric',round_to=2)
     # Calculate the liquid depth, in centimeters, of a hole filled with liquid
@@ -67,6 +72,9 @@ def main(argv):
    raw_measurement = get_raw_distace(value)
    liquid_depth = value.depth_metric(raw_measurement, hole_depth)
    print("Depth = {} centimeters".format(liquid_depth))
+   #print(now)
+   log.write(" \n Today: " + now)
+   log.write(" \n First depth = {} centimeters".format(liquid_depth))
    liquid_depth_0 = liquid_depth
    liquid_depth_prev = liquid_depth
    if (liquid_depth_0 > 5):
@@ -81,14 +89,19 @@ def main(argv):
         liquid_depth = liquid_depth_prev - 0.1
        liquid_depth_prev = liquid_depth
        print("Depth = {} centimeters".format(liquid_depth))
+       log.write(" \n Depth = {} centimeters".format(liquid_depth))
        if (liquid_depth < (liquid_depth_0 - height_water)):
          pi.set_PWM_dutycycle(pump_pin, 0) # turn off pump
          break         
    else:
      print("Too little water")
+     log.write(" \n Too little water")
    pi.set_PWM_dutycycle(pump_pin, 0) # turn off pump FOR ENSURE!
    pi.stop()
    print("Success.".format(liquid_depth_0 - liquid_depth))
+   log.write(" \n Success.".format(liquid_depth_0 - liquid_depth))
+   log.write(" \n \n ------")
+   log.close()
 
 if __name__ == "__main__":
    main(sys.argv[1:])
